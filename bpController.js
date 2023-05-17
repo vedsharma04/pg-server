@@ -96,7 +96,7 @@ router.post("/leaves", async (req, res) => {
       if (intent == "number") {
         // intent --> number
         query =
-          "SELECT COUNT(*) AS LEAVES FROM leaves l JOIN users u ON u.user_id=l.user_id";
+          "SELECT COUNT(*) AS people_on_leave FROM leaves l JOIN users u ON u.user_id=l.user_id";
       } else if (intent == "peopleWithDates") {
         // intent --> peopleWithDates
         query =
