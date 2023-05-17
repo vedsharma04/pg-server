@@ -2,6 +2,7 @@ const express = require("express");
 const moment = require("moment");
 const bodyParser = require("body-parser");
 const { Pool } = require("pg");
+const cors = require('cors')
 
 const pool = new Pool({
   user: "postgres",
@@ -10,11 +11,13 @@ const pool = new Pool({
   password: "TZExf5jrJK5VeY9z",
   port: 5432, // default PostgreSQL port
 });
+global.pool = pool;
 
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cors())
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
@@ -23,10 +26,6 @@ app.get("/", (req, res) => {
 pool.connect((err, client, done) => {
   if (err) throw err;
   console.log("Connected to PostgreSQL database");
-
-  app.listen(3000, () => {
-    console.log("Server is running on port 3000");
-  });
 
   app.get("/users/:status", (req, res) => {
     let query = "SELECT * FROM users";
@@ -104,7 +103,18 @@ pool.connect((err, client, done) => {
     );
   });
 
+  const bpController = require("./bpController");
+  const witController = require("./witController");
+
+  app.use("/wit", witController);
+  app.use("/bp", bpController);
+
   app.get("*", (req, res) => {
     console.log("received request", req.url);
+    return res.json('Invalid route')
+  });
+
+  app.listen(3000, () => {
+    console.log("Server is running on port 3000");
   });
 });
