@@ -1,5 +1,5 @@
 {
-  "name": "pg-server",
+  "name": "pg",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,7 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.18.2",
+    "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "ngrok": "^5.0.0-beta.2",
     "pg": "^8.10.0"
