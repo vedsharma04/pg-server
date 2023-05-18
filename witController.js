@@ -155,6 +155,14 @@ const resolveTimeEntity = (timeEntity, intent) => {
       isTimePresent: false,
     };
   }
+  
+  if (intent == "get_leave_count") {
+    return {
+      startTime: moment().utc().startOf("year").toDate(),
+      endTime: moment().utc().endOf("year").toDate(),
+      isTimePresent: false,
+    };
+  }
 
   if (isEmpty(timeObj)) {
     return {
